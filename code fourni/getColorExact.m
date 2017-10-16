@@ -1,10 +1,10 @@
 function [nI,snI]=getColorExact(colorIm,ntscIm)
 
 n=size(ntscIm,1); m=size(ntscIm,2);
-imgSize=n*m;
+imgSize=n*m; %nombre de pixels image
 
 
-nI(:,:,1)=ntscIm(:,:,1);
+nI(:,:,1)=ntscIm(:,:,1); %
 
 indsM=reshape([1:imgSize],n,m);
 lblInds=find(colorIm);
