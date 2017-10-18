@@ -76,11 +76,11 @@ for t=2:3 % pour u et v
     curIm=ntscIm(:,:,t); %curIm matrice semblable à ntscIm mais en avec une seule composante U ou V
     b(lblInds)=curIm(lblInds); %les valeurs de b aux indices 1b1Inds deviennent les valeurs de curIm aux indices 1b1Inds
     new_vals=A\b; %solveur mathlab pour resoudre Ax = b  
-    nI(:,:,t)=reshape(new_vals,n,m,1); %rechape, voir explications plus haut    
+    nI(:,:,t)=reshape(new_vals,n,m,1);    
 end
 
 
 
-snI=nI; %résultat dans espace YIQ
-nI=ntsc2rgb(nI); % resultat RGB
+snI=nI;
+nI=ntsc2rgb(nI);
 
