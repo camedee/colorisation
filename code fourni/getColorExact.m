@@ -39,7 +39,8 @@ for j=1:m
         end
         t_val=ntscIm(i,j,1); %intensité pixel centre du patch
         gvals(tlen+1)=t_val; %on rajout l'intensité du pixel au milieu
-        c_var=mean((gvals(1:tlen+1)-mean(gvals(1:tlen+1))).^2); %sigma² dans ma formule
+        mr=mean(gvals(1:tlen+1));
+        c_var=mean((gvals(1:tlen+1)-mr).^2); %sigma² dans ma formule
         csig=c_var*0.6;
         mgv=min((gvals(1:tlen)-t_val).^2); %minimum du carré de l'écart entre le pixel et son entourage afin de cherche le plus proche voisin en intensité.
         if (csig<(-mgv/log(0.01)))
@@ -47,9 +48,11 @@ for j=1:m
 	end
 	if (csig<0.000002) %si csig torp proche de 0 on lui assigne petite valeur
 	   csig=0.000002;
-        end
+    end
 
         gvals(1:tlen)=exp(-(gvals(1:tlen)-t_val).^2/csig);%on applique formule selon wrs pour chaque element de gvals
+%         gvals(1:tlen)=1+(gvals(1:tlen)-mr).*((t_val-mr)/csig);%on applique une autre formule selon wrs pour chaque element de gvals
+        
         gvals(1:tlen)=gvals(1:tlen)/sum(gvals(1:tlen)); %on fait en sorte que la somme des coefs wrs =1
         vals(len-tlen+1:len)=-gvals(1:tlen); % on stock valeurs pixels patch dans vals
       end
