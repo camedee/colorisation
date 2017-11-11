@@ -1,0 +1,18 @@
+video = frameLoader('viptraffic.avi')
+
+
+opticFlow = opticalFlowLK('NoiseThreshold',0.009);
+frame0 = rgb2gray(video(89).cdata);
+frame1 = rgb2gray(video(90).cdata);
+flow = estimateFlow(opticFlow,frame0);
+
+flow = estimateFlow(opticFlow, frame1);
+
+imshow(frame0) 
+hold on
+plot(flow,'DecimationFactor',[5 5],'ScaleFactor',10)
+hold off 
+
+for k=1:length(video)
+    flow = estimateFlow(opticFlow,
+end
