@@ -14,6 +14,7 @@ function [opticalFlowStruct] = lucasKanaderationMatlabToolbox(videoname)
     for k=1:length(video)
         frameRGB = video(k).cdata;
         frameGray = rgb2gray(frameRGB);
+        frameGray = videoCompressionCorrection(frameGray)
         flow = estimateFlow(opticFlow, frameGray);
         
         s(k).Vx = round(flow.Vx);
