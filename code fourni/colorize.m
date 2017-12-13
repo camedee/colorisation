@@ -1,7 +1,7 @@
 
-g_name='test.bmp';
-c_name='test2.bmp';
-out_name='test_res.bmp';
+g_name='example.bmp';
+c_name='example_marked.bmp';
+out_name='example_res.bmp';
 
 %set solver=1 to use a multi-grid solver 
 %and solver=2 to use an exact matlab "\" solver
