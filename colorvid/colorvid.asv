@@ -106,4 +106,4 @@ end
 for im=1:profondeur
     nbvid(:,:,:,im)=ntsc2rgb(nbvid(:,:,:,im));
 end
-colvid=uint8(nbvid.*255);
+colvid=nbvid;
