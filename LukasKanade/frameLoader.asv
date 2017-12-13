@@ -16,10 +16,8 @@ function [s, m] = frameLoader(video)
     end
     
     %Définir matric 4D
-    m = ones(vidHeight, vidWidth, 3, k-1);
+    m = ones(vidHeight, vidWidth, 3, k-1)
     for i=1:k-1
-       m(:,:,:,i) = s(i).cdata; 
-    end
     
 %Use image(ans(5).cdata) after use of this function to show 5th frame for
 %example
