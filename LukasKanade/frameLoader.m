@@ -16,7 +16,7 @@ function [s, m] = frameLoader(video)
     end
     
     %Définir matric 4D
-    m = ones(vidHeight, vidWidth, 3, k-1);
+    m = ones(vidHeight, vidWidth, 3, k-1,'uint8');
     for i=1:k-1
        m(:,:,:,i) = s(i).cdata; 
     end
