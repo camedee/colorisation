@@ -1,4 +1,5 @@
 function [colvid]=colorvid(nbvid,marvid)
+%% 
 %nbvid :  une matrice contenant toutes frames en noir et blanc 
 %         4D (hauteur, largeur, couleur (rgb), profondeur
 %marvid : idem avec certains pixels marqués
@@ -6,14 +7,13 @@ function [colvid]=colorvid(nbvid,marvid)
 largeur=size(nbvid,2); %largeur d'une frame
 hauteur=size(nbvid,1); %hauteur
 profondeur=size(nbvid,4);%nombre de frames
-
+%%
 %frame par frame on transforme en ntsc
 for i=1:profondeur
     nbvid(:,:,:,i)=rgb2ntsc(nbvid(:,:,:,i));
     marvid(:,:,:,i)=rgb2ntsc(marvid(:,:,:,i));
 end
-
-
+%%
 %On veut poser l'équation AX=B avec A matrice des poids des voisins.
 %Matrice carré de côté largeur*hauteur*profondeur. Elle définit tous
 %les couples possibles de pixels. Attention sur ligne du pixel marqué toutes valeurs sont à 0 sauf diagonale.
@@ -65,13 +65,13 @@ for im=1:profondeur
                     end
                 end
                 %% il nous reste a considerer pixel lui meme
-                lenvaleurs=lenvaleurs + 1
+                lenvaleurs=lenvaleurs + 1;
                 lignes(lenvaleurs)=largeur*hauteur*(im-1)+largeur*(lig-1)+col; %ligne correspond a notre pixel
                 colonnes(lenvaleurs)=largeur*hauteur*(im-1)+largeur*(lig-1)+col; %colonne correspond a notre pixel
                 voisins(lenvois+1)=nbvid(lig,col,1,im);% on rentre valeur du pixel dans à la fin de voisins
                 %%%formule wrs
                 moy=mean(voisins(1:lenvois+1)); %nécessaire pour calculer sigma
-                sig=max(mean((voisins(1:lenvois+1)-moy).^2)*0.6,0.00002);
+                sig=max(max(mean((voisins(1:lenvois+1)-moy).^2)*0.6,-min((voisins(1:lenvois)-voisins(lenvois+1)).^2)/log(0.01)),0.000002);
                 voisins(1:lenvois)=exp(-(voisins(1:lenvois)-voisins(lenvois+1)).^2/sig);%on remplace voisins par wrs (grace a calcul matriciel matlab pas besoin boucle)
                 voisins(1:lenvois)=voisins(1:lenvois)./sum(voisins(1:lenvois)); %on s'arrange pour que somme vaille 1
                 valeurs(lenvaleurs-lenvois:lenvaleurs-1)=-voisins(1:lenvois); %on met dans vecteur valeur valeurs 
