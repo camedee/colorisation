@@ -14,8 +14,10 @@ next = double(greyFrames(11).data);
 Vx = double(lucas(11).Vx);
 Vy = double(lucas(11).Vy);
 supposedcurrent = interp2(X,Y, next, X-Vx, Y-Vy);
-
 %%
 
 Result =current - supposedcurrent
+figure, imagesc(current), colormap gray
+figure, imagesc(supposedcurrent), colormap gray
+figure, imagesc(next), colormap gray
 
