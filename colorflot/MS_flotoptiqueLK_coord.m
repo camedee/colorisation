@@ -1,9 +1,9 @@
 close all; clear all; clc
-addpath datas m_func/
+addpath flot_optique/datas flot_optique/m_func/
 
-mex  -largeArrayDims c_func/gradient.cpp -output gradient_mex_single
-mex  -largeArrayDims c_func/divergence.cpp -output divergence_mex_single
-mex  -largeArrayDims c_func/lk.cpp -output lk_mex
+mex  -largeArrayDims flot_optique/c_func/gradient.cpp -output gradient_mex_single
+mex  -largeArrayDims flot_optique/c_func/divergence.cpp -output divergence_mex_single
+mex  -largeArrayDims flot_optique/c_func/lk.cpp -output lk_mex
 
 % Entrées.
 ISource = single(rgb2gray(imread('car0.png')));
