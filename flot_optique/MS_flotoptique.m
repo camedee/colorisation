@@ -30,7 +30,6 @@ for beta = 0.056%logspace(-1, -6, 100)
         
         % Lance le code multi-échelle sur la fonction précisée.
         tic
-        
         flow = multi_echelle(datas, get_dim,...
             @OF_TVL1, decim, interpol, 2, 0, 7);
         toc

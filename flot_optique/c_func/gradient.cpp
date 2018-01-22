@@ -207,7 +207,6 @@ void mexFunction(int nlhs, mxArray *plhs[]       ,
     
     const int n_dim_result= 3;
     size_t* dims_result = (size_t *)malloc(sizeof(size_t)*n_dim_result);
-
     dims_result[0]= height;
     dims_result[1]= width;
     dims_result[2]= nb_color*2;
