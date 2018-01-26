@@ -6,7 +6,7 @@ mex  -largeArrayDims flot_optique/c_func/divergence.cpp -output divergence_mex_s
 mex  -largeArrayDims flot_optique/c_func/lk.cpp -output lk_mex
 
 % Entrées.
-ISource = single(rgb2gray(imread('car0.png')));
+ISource = single(rgb2gray(imread('car0.png')))
 ITarget = single(rgb2gray(imread('car1.png')));
 
 % Données sur lesquelles on va travailler.
@@ -29,4 +29,4 @@ flow = multi_echelle(datas, get_dim,...
 toc
 
 % Recallage pour vérification.
-[f1,f2] = coord(ISource, flow)
+[f1,f2] = coord(ISource, flow);
