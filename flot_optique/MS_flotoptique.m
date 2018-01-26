@@ -37,7 +37,6 @@ for beta = 0.056%logspace(-1, -6, 100)
         % Recallage pour vérification.
         Iout = registre( ISource, flow, 'linear' );
         figure, imagesc(Iout), colormap gray
-        figure, imagesc(ISource), colormap gray
         figure, imagesc(ITarget), colormap gray
         
         err = sum((Iout(:)-ITarget(:)).^2);

@@ -251,7 +251,7 @@ void mexFunction(int nlhs, mxArray *plhs[]       ,
     
     /* Gestion entrees-sorties.*/
     int ndim= mxGetNumberOfDimensions(prhs[0]);
-    const int * dims= mxGetDimensions(prhs[0]);
+    const size_t * dims= mxGetDimensions(prhs[0]);
     
     int height = dims[0];
     int width = dims[1];
@@ -260,7 +260,7 @@ void mexFunction(int nlhs, mxArray *plhs[]       ,
     const float* G = (const float*)(mxGetPr(prhs[0]));
     
     const int n_dim_result= 3;
-    int* dims_result = (int *)malloc(sizeof(int)*n_dim_result);
+    size_t* dims_result = (size_t *)malloc(sizeof(size_t)*n_dim_result);
     dims_result[0]= height;
     dims_result[1]= width;
     dims_result[2]= nb_color;
