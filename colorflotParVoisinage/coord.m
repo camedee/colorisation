@@ -10,5 +10,6 @@ function [F1,F2]= coord( Imagetorec, flow)
 % Mouvement absolu à partir du relatif (flow). 
 F1 = nearest(max(min(flow(:,:,2)+X,y_max),1));
 F2 = nearest(max(min(flow(:,:,1)+Y,x_max),1));
+w = 42
 
 end
