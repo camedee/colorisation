@@ -91,7 +91,7 @@ ligneb=ligneb(1:lenb);
 valb=valb(1:lenb,:);
 %%création matrice sparse
 A=sparse(lignes,colonnes,valeurs,largeur*hauteur*profondeur,largeur*hauteur*profondeur);
-cond(A)
+% cond(A)
 %%
 for t=1:2    %on se fait d'abord un sparse sur le U et ensuite sur le V
    b=sparse(ligneb, ones(lenb, 1), valb(:,t), largeur*hauteur*profondeur,1);
