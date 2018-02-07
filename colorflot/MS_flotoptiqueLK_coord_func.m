@@ -1,9 +1,7 @@
 function [fx, fy] = MS_flotoptiqueLK_coord_func(source, target)
 addpath flot_optique/datas flot_optique/m_func/
 
-mex  -largeArrayDims flot_optique/c_func/gradient.cpp -output gradient_mex_single
-mex  -largeArrayDims flot_optique/c_func/divergence.cpp -output divergence_mex_single
-mex  -largeArrayDims flot_optique/c_func/lk.cpp -output lk_mex
+
 
 % Entrées.
 ISource = single(source);
@@ -25,15 +23,15 @@ decim = @(struct, facteur) sresize_lk(struct, facteur );
 % Lance le code multi-Ã©chelle sur la fonction prÃ©cisÃ©e.
 tic
 flow = multi_echelle(datas, get_dim,...
-    @OF_LK, decim, interpol, 2, 0, 6);
+    @OF_LK, decim, interpol, 2, 0, 3);
 toc
 
 % Enregistrement des coord
 [fx,fy] = coord(ISource, flow);
 
 %Recallage pour vérification.
-Iout = registre( ISource, flow, 'linear' );
-figure, imagesc(Iout), colormap gray
-figure, imagesc(ITarget), colormap gray
+%Iout = registre( ISource, flow, 'linear' );
+%figure, imagesc(Iout), colormap gray
+%figure, imagesc(ITarget), colormap gray
 
 end

@@ -1,4 +1,10 @@
 function vt = voisinstemporels(loadedFrames)
+
+%%these builds are for de MS flotoptiqueLK coord func function
+mex  -largeArrayDims flot_optique/c_func/gradient.cpp -output gradient_mex_single
+mex  -largeArrayDims flot_optique/c_func/divergence.cpp -output divergence_mex_single
+mex  -largeArrayDims flot_optique/c_func/lk.cpp -output lk_mex
+
 %%rend une struct comprennant tous les voisins temporels(frame d'avant et
 %%frame d'après) de chaque pixel de tous les frames
     %%gradeurs et var globales
@@ -18,11 +24,9 @@ function vt = voisinstemporels(loadedFrames)
      [vt(length(grayloadedFrames)).ante(:,:,1), vt(length(grayloadedFrames)).ante(:,:,2)] = MS_flotoptiqueLK_coord_func(grayloadedFrames(length(grayloadedFrames)).image, grayloadedFrames(length(grayloadedFrames)-1).image);
     %traitement des autres frames
     for k=2:length(grayloadedFrames)-1
-        k
         %remplissge des coordonnées du pixel actuel dans frame suivante
         [vt(k).poste(:,:,1), vt(k).poste(:,:,2)] = MS_flotoptiqueLK_coord_func(grayloadedFrames(k).image, grayloadedFrames(k+1).image); 
         %remplissge des coordonnées du pixel actuel dans frame précédente
         [vt(k).ante(:,:,1), vt(k).ante(:,:,2)] = MS_flotoptiqueLK_coord_func(grayloadedFrames(k).image, grayloadedFrames(k-1).image);
-    end
-    
+    end 
 end

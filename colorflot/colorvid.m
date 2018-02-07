@@ -1,8 +1,9 @@
-function [colvid]=colorvid(nbvid,marvid)
+function [colvid]=colorvid(nbvid,marvid,nbvidStruct)
 %% 
 %nbvid :  une matrice contenant toutes frames en noir et blanc 
 %         4D (hauteur, largeur, couleur (rgb), profondeur
 %marvid : idem avec certains pixels marqués
+voisinsTemporels = voisinstemporels(nbvidStruct);
 nbvid=double(nbvid)./255;
 marvid=double(marvid)./255;
 %colvid : retour idem avec video colorisée
@@ -23,7 +24,7 @@ end
 %les frames qu'on cherche à optimiser. B vecteur résultat qu'on cherche à
 %obtenir. toutes ses valeurs sont à 0 sauf celles des pixels marqués.
 %allocation memoire matrice:
-lignes=ones(largeur*hauteur*profondeur*27,1);%on stock ligne ou on va mettre val
+lignes=ones(largeur*hauteur*profondeur*11,1);%on stock ligne ou on va mettre val
 colonnes=lignes; % on stock colonne on on met val
 valeurs=lignes; % on stock val
 %allocation memoire vecteur B:
@@ -34,7 +35,7 @@ lenvaleurs=0;
 lenb=0;
 %allocation mémoire ( pixel + voisins, + voisins frame precedentes +
 %voisins frames suivante)
-voisins=zeros(27,0);%espace pour stocker pour chaque ligne (pixel) intensités de tous ces voisins (Y dans la formule)
+voisins=zeros(11,1);%espace pour stocker pour chaque ligne (pixel) intensités de tous ces voisins (Y dans la formule)
 for im=1:profondeur
     for lig=1:hauteur
         for col=1:largeur
@@ -55,22 +56,38 @@ for im=1:profondeur
                     for vcol=max(1,col-1):min(largeur,col+1)%pour colonne avec prise en compte bord
                         %%on étudie le pixel (im lig col) et chacun
                         %%de ses voisins (vim vlig vcol)
-                        if vim~=im || vlig~=lig || vcol~=col % verifier qu'on est pas sur pixel lui meme et bien sur ses voisins
+                        if vlig~=lig || vcol~=col % verifier qu'on est pas sur pixel lui meme et bien sur ses voisins
                            lenvois=lenvois+1;
                            lenvaleurs=lenvaleurs+1;
                            lignes(lenvaleurs)=largeur*hauteur*(im-1)+largeur*(lig-1)+col; %ligne de la valeur c'est coordoonnées du pixel etudie
-                           colonnes(lenvaleurs)=largeur*hauteur*(vim-1)+largeur*(vlig-1)+vcol; %colonne de la valeur c'est coodoonnées voisin étudié
-                           voisins(lenvois)=nbvid(vlig,vcol,1,vim); %dans vecteur voisin on met intensité du voisin
+                           colonnes(lenvaleurs)=largeur*hauteur*(im-1)+largeur*(vlig-1)+vcol; %colonne de la valeur c'est coodoonnées voisin étudié
+                           voisins(lenvois)=nbvid(vlig,vcol,1,im); %dans vecteur voisin on met intensité du voisin
                         end
                     end 
                 end
-                %rajouter voisin d'après et voisin d'avant
-                lenvois=lenvois+1;
-                lenvaleurs = lenvaleurs+1;
-                lignes(lenvaleurs)=largeur*hauteur*(im-1)+largeur*(lig-1)+col;
                 
-                colonnes(lenvaleurs)=largeur*hauteur*(frameduvoisin-1)+largeur*(ligneduvoisin-1)+colonneduvoisin;
-                voisins(lenvois)=nbvid(ligneduvoisin,colonneduvoisin,1,frameduvoisin)
+                %%rajouter voisin d'après et voisin d'avant
+                if im > 1
+                    %voisin d'avant :
+                    antY = voisinsTemporels(im).ante(lig,col,1);
+                    antX = voisinsTemporels(im).ante(lig,col,2);
+                    lenvois=lenvois+1;
+                    lenvaleurs=lenvaleurs+1;
+                    lignes(lenvaleurs)=largeur*hauteur*(im-1)+largeur*(lig-1)+col;
+                    colonnes(lenvaleurs)=largeur*hauteur*(im-2)+largeur*(antX-1)+antY;
+                    voisins(lenvois)=nbvid(antX,antY,1,im-1);
+                end
+                
+                if im < profondeur
+                    %voisin d'après :
+                    postY = voisinsTemporels(im).poste(lig,col,1);
+                    postX = voisinsTemporels(im).poste(lig,col,2);
+                    lenvois=lenvois+1;
+                    lenvaleurs=lenvaleurs+1;
+                    lignes(lenvaleurs)=largeur*hauteur*(im-1)+largeur*(lig-1)+col;
+                    colonnes(lenvaleurs)=largeur*hauteur*(im)+largeur*(postX-1)+postY;
+                    voisins(lenvois)=nbvid(postX,postY,1,im+1);
+                end
                 
                 %% il nous reste a considerer pixel lui meme
                 lenvaleurs=lenvaleurs + 1;
