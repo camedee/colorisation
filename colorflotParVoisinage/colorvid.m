@@ -69,8 +69,8 @@ for im=1:profondeur
                 %%rajouter voisins d'après et voisins d'avant
                 if im > 1
                     %voisin d'avant :
-                    antX = voisinsTemporels(im).ante(lig,col,1);
-                    antY = voisinsTemporels(im).ante(lig,col,2);
+                    antY = voisinsTemporels(im).ante(lig,col,1);
+                    antX = voisinsTemporels(im).ante(lig,col,2);
                     for vlig=max(1,antY-1):min(hauteur,antY+1) %pour ligne avec prise en compte bord
                         for vcol=max(1,antX-1):min(largeur,antX+1)%pour colonne avec prise en compte bord
                            lenvois=lenvois+1;
@@ -84,8 +84,8 @@ for im=1:profondeur
                 
                 if im < profondeur
                     %voisin d'après :
-                    postX = voisinsTemporels(im).poste(lig,col,1);
-                    postY = voisinsTemporels(im).poste(lig,col,2);
+                    postY = voisinsTemporels(im).poste(lig,col,1);
+                    postX = voisinsTemporels(im).poste(lig,col,2);
                     for vlig=max(1,postY-1):min(hauteur,postY+1) %pour ligne avec prise enc ompte bord
                         for vcol=max(1,postX-1):min(largeur,postX+1)%pour colonne avec prise en compte bord
                            lenvois=lenvois+1;
