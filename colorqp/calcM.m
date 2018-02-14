@@ -27,7 +27,8 @@ for j=1:m
         end
         me=sum(su(1:tlen))/tlen;
         sig=max(0.0000001,sum((su(1:tlen)-me).^2));
-        v(len-tlen+1:len)=exp(-((su(1:tlen)-io(i,j,1)).^2)/(2*sig));
+%         v(len-tlen+1:len)=exp(-((su(1:tlen)-io(i,j,1)).^2)/(2*sig));
+        v(len-tlen+1:len)=1+((su(1:tlen)-me).*((io(i,j,1)-me)/sig));
         v(len-tlen+1:len)=-v(len-tlen+1:len)./sum(v(len-tlen+1:len));
         len=len+1;
         ri(len)=clen;

@@ -1,7 +1,7 @@
 
-g_name='DCnb.bmp';
-c_name='DCmarked.bmp';
-out_name='DC_res.bmp';
+g_name='test.bmp';
+c_name='test2.bmp';
+out_name='test_res2.bmp';
 
 %set solver=1 to use a multi-grid solver 
 %and solver=2 to use an exact matlab "\" solver

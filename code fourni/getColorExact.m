@@ -51,7 +51,7 @@ for j=1:m
             end
             
             gvals(1:tlen)=exp(-(gvals(1:tlen)-t_val).^2/csig);%on applique formule selon wrs pour chaque element de gvals
-            %         gvals(1:tlen)=1+(gvals(1:tlen)-mr).*((t_val-mr)/csig);%on applique une autre formule selon wrs pour chaque element de gvals
+            %gvals(1:tlen)=1+((gvals(1:tlen)-mr).*((t_val-mr)/csig));%on applique une autre formule selon wrs pour chaque element de gvals
             
             gvals(1:tlen)=gvals(1:tlen)/sum(gvals(1:tlen)); %on fait en sorte que la somme des coefs wrs =1
             vals(len-tlen+1:len)=-gvals(1:tlen); % on stock valeurs pixels patch dans vals

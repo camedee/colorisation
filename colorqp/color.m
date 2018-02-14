@@ -1,7 +1,7 @@
 
-g_name='example.bmp';
-i_name='example_marked.bmp';
-out_name='test_res.bmp';
+g_name='paysagenb.bmp';
+i_name='paysagema.bmp';
+out_name='paysageres4.bmp';
 
 
 gI=double(imread(g_name))/255;
