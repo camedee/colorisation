@@ -1,8 +1,8 @@
 close all; clear all; clc
-addpath datas m_func/
+addpath flot_optique/datas flot_optique/m_func/
 
-mex c_func/gradient.cpp -output gradient_mex_single
-mex c_func/divergence.cpp -output divergence_mex_single
+mex flot_optique/c_func/gradient.cpp -output gradient_mex_single
+mex flot_optique/c_func/divergence.cpp -output divergence_mex_single
 
 errmin = Inf;
 Tableau_err = [];
@@ -11,8 +11,10 @@ for beta = 0.056%logspace(-1, -6, 100)
     for lambda = 0.05%logspace(-1, -6, 100)
         
         % Entrées.
-        ISource = single(rgb2gray(imread('car0.png')));
-        ITarget = single(rgb2gray(imread('car1.png')));
+        [structnb1, nb1] = frameLoader('DCsmooth.avi');
+        [caca, nb2] = frameLoader('DCsmoothM.avi');
+        ISource = single(rgb2gray(nb1(:,:,:,45)));
+        ITarget = single(rgb2gray(nb1(:,:,:,46)));
         
         % Données sur lesquelles on va travailler.
         datas = struct('IS', ISource, 'IT', ITarget,...
@@ -36,8 +38,12 @@ for beta = 0.056%logspace(-1, -6, 100)
         
         % Recallage pour vérification.
         Iout = registre( ISource, flow, 'linear' );
-        figure, imagesc(Iout), colormap gray
+        figure, imagesc(ISource), colormap gray
         figure, imagesc(ITarget), colormap gray
+        figure, imagesc(Iout), colormap gray
+        imwrite(ISource,'mauvaisRecalageSource2.jpg')
+        imwrite(ITarget,'mauvaisRecalageTarget2.jpg')
+        imwrite(Iout,'mauvaisRecalageOut2.jpg')
         
         err = sum((Iout(:)-ITarget(:)).^2);
         if err < errmin

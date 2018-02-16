@@ -6,8 +6,10 @@ mex  -largeArrayDims flot_optique/c_func/divergence.cpp -output divergence_mex_s
 mex  -largeArrayDims flot_optique/c_func/lk.cpp -output lk_mex
 
 % Entrées.
-ISource = single(rgb2gray(imread('car0.png')))
-ITarget = single(rgb2gray(imread('car1.png')));
+[structnb1, nb1] = frameLoader('DCsmooth.avi');
+[caca, nb2] = frameLoader('DCsmoothM.avi');
+ISource = single(rgb2gray(nb1(:,:,:,25)));
+ITarget = single(rgb2gray(nb1(:,:,:,26)));
 
 % Données sur lesquelles on va travailler.
 datas = struct('IS', ISource, 'IT', ITarget);
